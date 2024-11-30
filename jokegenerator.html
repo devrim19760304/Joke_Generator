@@ -1,0 +1,175 @@
+<!DOCTYPE>
+<html lang="eng">
+
+<head>
+    <title> Api Call</title>
+    <style>
+        * {
+            font-family: Comic sans Ms;
+        }
+
+        body {
+            align-items: center;
+            background-color: rgb(223, 155, 107);
+
+        }
+
+
+        h1 {
+            text-align: center;
+            margin-top: 40px;
+            text-decoration: underline;
+            box-shadow: 4px 4px 4px gray;
+        }
+
+        h1:hover {
+            font-size: 320%;
+
+        }
+
+        #content {
+            width: 500px;
+            height: 600px;
+            text-overflow: clip;
+            background-color: darkgray;
+            margin-top: 20px;
+            border-radius: 10px;
+            font-size: 30px;
+            align-items: center;
+            margin-left: 40%;
+            box-shadow: 5px 5px 5x darkblue;
+
+
+        }
+
+        #but1 {
+            border-radius: 5px;
+            background-color: rgb(208, 197, 217);
+            color: rgb(108, 28, 28);
+            width: 250px;
+            height: 40px;
+
+            font-size: 20px;
+            font-family: Comic Sans Ms;
+            border-color: gray;
+            margin: 60 150 130 110;
+
+        }
+
+        #textarea1 {
+
+            border-radius: 10px;
+            background-color: beige;
+            width: 90%;
+            height: 80%;
+
+            font-family: Comic Sans MS;
+            font-size: 32px;
+
+            margin: 10 20 auto;
+
+            box-shadow: 3px 3px 3px pink;
+            overflow: hidden;
+            transform-origin: center;
+            text-align: center;
+            vertical-align: 200px;
+            background-image: linear-gradient(beige, rgb(70, 192, 48));
+
+
+        }
+
+        .animate {
+            animation: scaler 1s infinite linear;
+        }
+
+        @keyframes scaler {
+            0% {
+
+                transform: scale(0) rotateY(0deg);
+                font-size: 0px;
+                opacity: 0;
+
+            }
+
+            100% {
+
+                transform: scale(1) rotateY(360deg);
+                font-size: 32px;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>
+        <span style="color:pink;font-size:60px;">R</span>
+        andom
+        <span style="color:cornflowerblue;font-size:56;"> Jo</span>ke
+        <span style="color:brown;background-color: blue;"> G</span>enerator
+    </h1>
+    <hr>
+    <div id="content">
+
+        <textarea id="textarea1" disabled></textarea>
+        <button id="but1"> Get<span style="color:rgb(198, 19, 49);"> ME </span> Random Joke</button><br>
+
+
+    </div>
+
+    <script>
+
+
+
+        let url = 'https://official-joke-api.appspot.com/random_joke';
+
+        const EmojiList = "😉,😎,😘,😊,😂,🤣,😒,😁,👍,😃,🤔";
+        let EmojiArray = EmojiList.split(",");
+        console.log(EmojiArray);
+
+
+
+
+        document.getElementById('but1').addEventListener('click', async function () {
+
+            try {
+
+                let chooseComment = EmojiArray[Math.floor(Math.random() * EmojiArray.length)];
+
+                document.getElementById("textarea1").style.fontSize = "50px";
+                document.getElementById("textarea1").innerHTML = "THINKING\n" + chooseComment;
+                setTimeout(async () => {
+                    let req = new Request(url);
+                    let response = await fetch(req);
+                    let data = await response.json();
+
+                    let textarea = document.getElementById('textarea1');
+                    textarea.classList.add('animate');
+                    setTimeout(() => {
+                        textarea.classList.remove('animate');
+                    }, 1000);
+
+                    document.getElementById("textarea1").style.fontSize = "32px";
+                    chooseComment = EmojiArray[Math.floor(Math.random() * EmojiArray.length)];
+                    document.getElementById('textarea1').innerHTML = '😎' + data.setup + "\n" + data.punchline + "\n" + "😜" + chooseComment;
+                }, 2000);
+
+
+
+
+            } catch (error) {
+                alert('Error Loading content: ' + error);
+            }
+        }
+
+
+
+        );
+
+
+    </script>
+
+</body>
+
+</html>
